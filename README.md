@@ -1,1 +1,1 @@
-crypto init
+Kucoin Trading Bot
