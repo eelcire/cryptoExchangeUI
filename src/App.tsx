@@ -1,23 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { auth } from './config/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 import Homepage from './components/pages/Homepage';
 import Auth from './components/pages/Auth';
-import { AuthUserContextProvider } from './context/AuthContext';
+import { Header } from './components/molecules/Header';
 import RequireAuth from './components/atoms/RequireAuth';
 
 export default function App() {
-	return (
-		<AuthUserContextProvider>
-			<Router>
-				<Routes>
-					<Route path="/" element={<RequireAuth><Homepage /></RequireAuth>} />
+	const [authUser, setAuthUser] = useState(null as any);
 
-					<Route path="/login" element={<Auth />} />
-					<Route path="/signup" element={<Auth />} />
-				</Routes>
-			</Router>
-		</AuthUserContextProvider>
+	useEffect(() => {
+		const listen = onAuthStateChanged(auth, (user) => {
+			if (user) {
+				console.log(1)
+				localStorage.setItem('firebaseAuthUser', JSON.stringify(user));
+				setAuthUser(user);
+				console.log(user)
+			}
+			else {
+				localStorage.removeItem('firebaseAuthUser');
+				setAuthUser(null);
+			}
+		});
+
+		return () => {
+			//removes listener after component unmounts
+			listen;
+		}
+	}, [])
+
+	console.log(`AuthUser: ${authUser}`)
+
+	return (
+		<Router>
+			<Header authUser={authUser} />
+			<Routes>
+				<Route path="/" element={
+					<RequireAuth authUser={authUser}>
+						<Homepage />
+					</RequireAuth>}
+				/>
+
+				<Route path="/login" element={authUser ? <Navigate to="/" /> : <Auth />} />
+				<Route path="/signup" element={authUser ? <Navigate to="/" /> : <Auth />} />
+			</Routes>
+		</Router>
 	);
 }

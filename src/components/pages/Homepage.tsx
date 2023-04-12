@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 
-import { AuthUserContext } from '../../context/AuthContext';
+import { AuthUserContext } from '../molecules/Header';
 
 const Homepage = () => {
-	const authUser = useContext(AuthUserContext)
+	const authUser = JSON.parse(localStorage.getItem('firebaseAuthUser')!);
+	console.log(1)
 	console.log(authUser)
 
 	return (

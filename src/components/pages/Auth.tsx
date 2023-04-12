@@ -70,7 +70,7 @@ const Auth = () => {
 
 	return (
 		<>
-			<button onClick={handleRouteChange}>{`Click here to ${infoText}`}</button>
+			<button onClick={handleRouteChange}>{`Click here to ${infoText === 'Login' ? 'Sign Up' : 'Login'}`}</button>
 			<form onSubmit={handleSubmit}>
 				<input type="email" value={email} onChange={handleEmailChange} />
 				<input type="password" value={password} onChange={handlePasswordChange} />

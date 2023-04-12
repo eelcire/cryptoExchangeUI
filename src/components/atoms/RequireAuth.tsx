@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
-import { Navigate } from 'react-router-dom'
-
-import { AuthUserContext } from '../../context/AuthContext';
+import React from 'react';
+import { Navigate } from 'react-router-dom';
 
 const RequireAuth = ({ children }: any) => {
-	const authUser = useContext(AuthUserContext)
+	const authUser = JSON.parse(localStorage.getItem('firebaseAuthUser')!);
+	console.log(2)
+	console.log(authUser)
 
-	return authUser ? children : <Navigate to='/login' replace />;
+	return authUser ? children : <Navigate to='/login' replace state={{ path: location.pathname }} />;
 }
 
 export default RequireAuth;
