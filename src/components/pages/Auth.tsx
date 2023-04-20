@@ -39,7 +39,6 @@ const Auth = () => {
 				.then((userCredential) => {
 					// User is signed in
 					const user = userCredential.user;
-					console.log(user);
 					navigate('/');
 				})
 				.catch((error) => {
@@ -52,7 +51,6 @@ const Auth = () => {
 				.then((userCredential) => {
 					// User is signed in
 					const user = userCredential.user;
-					console.log(user);
 					navigate('/');
 				})
 				.catch((error) => {

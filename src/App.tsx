@@ -9,16 +9,14 @@ import Auth from './components/pages/Auth';
 import { Header } from './components/molecules/Header';
 import RequireAuth from './components/atoms/RequireAuth';
 
-export default function App() {
+const App = () => {
 	const [authUser, setAuthUser] = useState(null as any);
 
 	useEffect(() => {
 		const listen = onAuthStateChanged(auth, (user) => {
 			if (user) {
-				console.log(1)
 				localStorage.setItem('firebaseAuthUser', JSON.stringify(user));
 				setAuthUser(user);
-				console.log(user)
 			}
 			else {
 				localStorage.removeItem('firebaseAuthUser');
@@ -50,3 +48,5 @@ export default function App() {
 		</Router>
 	);
 }
+
+export default App;

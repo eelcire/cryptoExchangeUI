@@ -1,10 +1,7 @@
-import React, { useContext } from 'react';
-
-import { AuthUserContext } from '../molecules/Header';
+import React from 'react';
 
 const Homepage = () => {
 	const authUser = JSON.parse(localStorage.getItem('firebaseAuthUser')!);
-	console.log(1)
 	console.log(authUser)
 
 	return (
